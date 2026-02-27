@@ -44,6 +44,8 @@ def api_documentation():
                     font-family: Arial;
                     padding: 40px;
                     line-height: 1.6;
+                    max-width: 900px;
+                    margin: auto;
                 }
                 h1 { color: #2c3e50; }
                 code {
@@ -51,39 +53,121 @@ def api_documentation():
                     padding: 4px 6px;
                     border-radius: 4px;
                 }
-                .endpoint {
-                    margin-bottom: 20px;
+                pre {
+                    background: #f4f4f4;
                     padding: 15px;
+                    border-radius: 6px;
+                    overflow-x: auto;
+                }
+                .endpoint {
+                    margin-bottom: 30px;
+                    padding: 20px;
                     background: #f9f9f9;
                     border-left: 4px solid #3498db;
                 }
             </style>
         </head>
         <body>
+
             <h1>🚀 Conversion Engine API</h1>
-            <p><strong>Base URL:</strong><br>
-            <code>https://conversion-engine-api.onrender.com/</code></p>
 
-            <h2>Available Endpoints</h2>
+            <p><strong>Base URL:</strong></p>
+            <code>https://conversion-engine-api.onrender.com/</code>
 
-            <div class="endpoint">
-                <h3>1️⃣ Create Order</h3>
-                <p><strong>POST</strong> <code>/create-test-order</code></p>
-                <p>Creates a new order with user, address and products.</p>
-            </div>
+            <hr>
+
+            <h2>1️⃣ Create Order</h2>
 
             <div class="endpoint">
-                <h3>2️⃣ Get Orders Grid</h3>
-                <p><strong>GET</strong> <code>/orders-detailed</code></p>
-                <p>Returns detailed order grid data (one row per product per order).</p>
+                <p><strong>Method:</strong> POST</p>
+                <p><strong>Endpoint:</strong> <code>/create-test-order</code></p>
+                <p><strong>Content-Type:</strong> application/json</p>
+
+                <h3>Request Format (JSON)</h3>
+                <pre>
+{
+  "phone": "9999999999",
+  "full_name": "Test Buyer",
+  "address_line": "Sector 10",
+  "city": "Navi Mumbai",
+  "state": "Maharashtra",
+  "pincode": "410218",
+  "delivery_charge": 40,
+  "payment_method": "COD",
+  "items": [
+    {
+      "product_id": 1,
+      "quantity": 2,
+      "price": 100
+    }
+  ]
+}
+                </pre>
+
+                <h3>Success Response</h3>
+                <pre>
+{
+  "message": "Test order created successfully",
+  "order_id": 12,
+  "user_id": 5
+}
+                </pre>
             </div>
 
-            <h2>Swagger Documentation</h2>
+<h2>2️⃣ Get Orders Detailed Grid</h2>
+
+<div class="endpoint">
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Endpoint:</strong> <code>/orders-detailed</code></p>
+
+    <p><strong>Description:</strong> Returns a list of all orders.
+    Each row represents one product inside an order.</p>
+
+    <h3>Response Type</h3>
+    <p>Array of JSON objects</p>
+
+    <h3>Example Response</h3>
+    <pre>
+[
+  {
+    "order_id": 12,
+    "customer_name": "Rahul Sharma",
+    "contact_number": "9000000001",
+    "full_address": "Sector 10, Navi Mumbai, Maharashtra, 410218",
+    "payment_method": "COD",
+    "ordered_date": "2026-02-27T12:10:22",
+    "product_name": "Paracetamol 500mg",
+    "quantity": 2,
+    "price": 50,
+    "total_bill": 210
+  },
+  {
+    "order_id": 12,
+    "customer_name": "Rahul Sharma",
+    "contact_number": "9000000001",
+    "full_address": "Sector 10, Navi Mumbai, Maharashtra, 410218",
+    "payment_method": "COD",
+    "ordered_date": "2026-02-27T12:10:22",
+    "product_name": "Vitamin C Tablets",
+    "quantity": 1,
+    "price": 120,
+    "total_bill": 210
+  }
+]
+    </pre>
+
+    <p><strong>Note:</strong> If an order contains multiple products,
+    multiple rows will appear with the same order_id.</p>
+</div>
+            <hr>
+
+            <h2>📘 Swagger Documentation</h2>
             <p>Interactive API testing available at:</p>
             <code>/docs</code>
 
             <br><br>
             <p style="color:gray;">Version: 1.0 | Environment: Production</p>
+
         </body>
     </html>
     """
