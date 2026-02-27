@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conversion Engine Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        input { margin: 5px; padding: 5px; }
+        button { padding: 6px 10px; margin-top: 10px; }
+        table { border-collapse: collapse; margin-top: 20px; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; }
+        th { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+<h2>Create Test Order</h2>
+
+<input id="phone" placeholder="Phone"><br>
+<input id="name" placeholder="Full Name"><br>
+<input id="address" placeholder="Address"><br>
+<input id="city" placeholder="City"><br>
+<input id="state" placeholder="State"><br>
+<input id="pincode" placeholder="Pincode"><br>
+<input id="productId" placeholder="Product ID"><br>
+<input id="quantity" placeholder="Quantity"><br>
+<input id="price" placeholder="Price"><br>
+<input id="delivery" placeholder="Delivery Charge"><br>
+
+<button onclick="createOrder()">Create Order</button>
+
+<hr>
+
+<h2>Orders Grid</h2>
+<button onclick="loadOrders()">Load Orders</button>
+
+<table id="ordersTable">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Total Bill</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+const BASE_URL = "http://127.0.0.1:8000";
+
+async function createOrder() {
+    const data = {
+        phone: document.getElementById("phone").value,
+        full_name: document.getElementById("name").value,
+        address_line: document.getElementById("address").value,
+        city: document.getElementById("city").value,
+        state: document.getElementById("state").value,
+        pincode: document.getElementById("pincode").value,
+        delivery_charge: parseFloat(document.getElementById("delivery").value),
+        payment_method: "COD",
+        items: [
+            {
+                product_id: parseInt(document.getElementById("productId").value),
+                quantity: parseInt(document.getElementById("quantity").value),
+                price: parseFloat(document.getElementById("price").value)
+            }
+        ]
+    };
+
+    const response = await fetch(`${BASE_URL}/create-test-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    alert(JSON.stringify(result, null, 2));
+}
+
+async function loadOrders() {
+    const response = await fetch(`${BASE_URL}/orders-detailed`);
+    const data = await response.json();
+
+    const tbody = document.querySelector("#ordersTable tbody");
+    tbody.innerHTML = "";
+
+    data.forEach(order => {
+        const row = `
+            <tr>
+                <td>${order.order_id}</td>
+                <td>${order.customer_name}</td>
+                <td>${order.contact_number}</td>
+                <td>${order.full_address}</td>
+                <td>${order.product_name}</td>
+                <td>${order.quantity}</td>
+                <td>${order.price}</td>
+                <td>${order.total_bill}</td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+}
+</script>
+
+</body>
+</html>
