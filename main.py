@@ -69,14 +69,14 @@ def api_documentation():
         </head>
         <body>
 
-            <h1>🚀 Conversion Engine API</h1>
+            <h1>Conversion Engine API</h1>
 
             <p><strong>Base URL:</strong></p>
             <code>https://conversion-engine-api.onrender.com/</code>
 
             <hr>
 
-            <h2>1️⃣ Create Order</h2>
+            <h2>1 : Create Order</h2>
 
             <div class="endpoint">
                 <p><strong>Method:</strong> POST</p>
@@ -114,7 +114,7 @@ def api_documentation():
                 </pre>
             </div>
 
-<h2>2️⃣ Get Orders Detailed Grid</h2>
+<h2>2 : Get Orders Detailed Grid</h2>
 
 <div class="endpoint">
     <p><strong>Method:</strong> GET</p>
@@ -159,12 +159,6 @@ def api_documentation():
     <p><strong>Note:</strong> If an order contains multiple products,
     multiple rows will appear with the same order_id.</p>
 </div>
-            <hr>
-
-            <h2>📘 Swagger Documentation</h2>
-            <p>Interactive API testing available at:</p>
-            <code>/docs</code>
-
             <br><br>
             <p style="color:gray;">Version: 1.0 | Environment: Production</p>
 
