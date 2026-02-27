@@ -27,10 +27,66 @@ def get_db():
         db.close()
 
 
-@app.get("/")
-def root():
-    return {"message": "Conversion Engine API Running 🚀"}
+# @app.get("/")
+# def root():
+#     return {"message": "Conversion Engine API Running 🚀"}
 
+from fastapi.responses import HTMLResponse
+
+@app.get("/", response_class=HTMLResponse)
+def api_documentation():
+    return """
+    <html>
+        <head>
+            <title>Conversion Engine API</title>
+            <style>
+                body {
+                    font-family: Arial;
+                    padding: 40px;
+                    line-height: 1.6;
+                }
+                h1 { color: #2c3e50; }
+                code {
+                    background: #f4f4f4;
+                    padding: 4px 6px;
+                    border-radius: 4px;
+                }
+                .endpoint {
+                    margin-bottom: 20px;
+                    padding: 15px;
+                    background: #f9f9f9;
+                    border-left: 4px solid #3498db;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>🚀 Conversion Engine API</h1>
+            <p><strong>Base URL:</strong><br>
+            <code>https://conversion-engine-api.onrender.com/</code></p>
+
+            <h2>Available Endpoints</h2>
+
+            <div class="endpoint">
+                <h3>1️⃣ Create Order</h3>
+                <p><strong>POST</strong> <code>/create-test-order</code></p>
+                <p>Creates a new order with user, address and products.</p>
+            </div>
+
+            <div class="endpoint">
+                <h3>2️⃣ Get Orders Grid</h3>
+                <p><strong>GET</strong> <code>/orders-detailed</code></p>
+                <p>Returns detailed order grid data (one row per product per order).</p>
+            </div>
+
+            <h2>Swagger Documentation</h2>
+            <p>Interactive API testing available at:</p>
+            <code>/docs</code>
+
+            <br><br>
+            <p style="color:gray;">Version: 1.0 | Environment: Production</p>
+        </body>
+    </html>
+    """
 
 @app.post("/check-phone", response_model=schemas.PhoneCheckResponse)
 def check_phone(request: schemas.PhoneCheckRequest, db: Session = Depends(get_db)):
