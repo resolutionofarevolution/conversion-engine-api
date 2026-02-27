@@ -139,7 +139,7 @@ def api_documentation():
     "product_name": "Paracetamol 500mg",
     "quantity": 2,
     "price": 50,
-    "total_bill": 210
+    "total_bill": 100
   },
   {
     "order_id": 12,
@@ -151,7 +151,7 @@ def api_documentation():
     "product_name": "Vitamin C Tablets",
     "quantity": 1,
     "price": 120,
-    "total_bill": 210
+    "total_bill": 120
   }
 ]
     </pre>
